@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react'
 import { toast } from 'react-toastify'
+import cx from 'classnames'
 
 import firebase from 'lib/firebase'
 import useCurrentUser from 'hooks/useCurrentUser'
@@ -47,9 +48,13 @@ const AuthButton = () => {
 				email: user.email,
 				joined: firebase.firestore.FieldValue.serverTimestamp()
 			})
-		} catch (error) {
-			console.log(error)
-			toast.error(error.message)
+		} catch ({ code, message }) {
+			switch (code) {
+				case 'auth/popup-closed-by-user':
+					return
+				default:
+					toast.error(message)
+			}
 		} finally {
 			setIsLoading(false)
 		}
@@ -57,10 +62,11 @@ const AuthButton = () => {
 	
 	return (
 		<button
-			className={styles.root}
+			className={cx(styles.root, {
+				[styles.authenticated]: currentUser
+			})}
 			disabled={isLoading}
 			onClick={onClick}
-			data-name={currentUser?.displayName}
 		>
 			{isLoading
 				? 'loading...'
