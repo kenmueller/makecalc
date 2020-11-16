@@ -1,12 +1,20 @@
+@use 'variables' as *;
+
 .root {
-	display: flex;
 	position: fixed;
-	align-items: center;
 	top: 0;
 	left: 0;
 	right: 0;
-	padding: 12px 20px;
-	border-bottom: 1px solid #333;
+	border-bottom: $navbar-bottom-border-width solid #333;
+}
+
+.content {
+	display: flex;
+	align-items: center;
+	max-width: $max-width;
+	height: $navbar-inner-height;
+	margin: 0 auto;
+	padding: 0 $body-padding;
 }
 
 .home {

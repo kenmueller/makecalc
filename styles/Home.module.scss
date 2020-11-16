@@ -1,8 +1,22 @@
+@use 'variables' as *;
+
 .root {
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
-	align-items: center;
-	height: 100vh;
+	min-height: calc(100vh - #{$navbar-height + $body-padding * 2});
 	text-align: center;
-	font-family: Arial, Helvetica, sans-serif;
+	color: white;
+}
+
+.title {
+	font-size: 80px;
+	font-weight: 900;
+}
+
+.description {
+	margin-top: 20px;
+	font-size: 24px;
+	font-weight: 900;
+	opacity: 0.7;
 }

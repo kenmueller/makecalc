@@ -1,6 +1,8 @@
 @use '~@fortawesome/fontawesome-svg-core/styles';
 @use '~react-toastify/dist/ReactToastify';
 
+@use 'variables' as *;
+
 *,
 ::before,
 ::after {
@@ -14,6 +16,9 @@
 
 body {
 	overscroll-behavior: none;
+	max-width: $max-width;
+	margin: 0 auto;
+	padding: ($navbar-height + $body-padding) $body-padding $body-padding;
 	background: black;
 }
 
