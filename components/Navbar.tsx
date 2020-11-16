@@ -2,6 +2,8 @@ import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
+import AuthButton from './AuthButton'
+
 import styles from 'styles/Navbar.module.scss'
 
 const Navbar = () => (
@@ -15,6 +17,7 @@ const Navbar = () => (
 				new
 			</a>
 		</Link>
+		<AuthButton />
 	</nav>
 )
 
