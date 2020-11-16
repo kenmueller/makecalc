@@ -21,6 +21,9 @@ const AuthButton = () => {
 	const currentUser = useCurrentUser()
 	
 	const onClick = useCallback(async () => {
+		if (isLoading || currentUser === undefined)
+			return
+		
 		try {
 			setIsLoading(true)
 			
@@ -58,17 +61,17 @@ const AuthButton = () => {
 		} finally {
 			setIsLoading(false)
 		}
-	}, [currentUser])
+	}, [isLoading, currentUser, setIsLoading])
 	
 	return (
 		<button
 			className={cx(styles.root, {
 				[styles.authenticated]: currentUser
 			})}
-			disabled={isLoading}
+			disabled={isLoading || currentUser === undefined}
 			onClick={onClick}
 		>
-			{isLoading
+			{isLoading || currentUser === undefined
 				? 'loading...'
 				: currentUser?.displayName ?? 'sign in'
 			}

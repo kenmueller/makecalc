@@ -8,7 +8,7 @@ import 'firebase/auth'
 const auth = firebase.auth()
 
 const useCurrentUser = () => {
-	const [user, setUser] = useState<firebase.User | null>(null)
+	const [user, setUser] = useState<firebase.User | null | undefined>()
 	
 	useEffect(() => {
 		auth.onAuthStateChanged(
