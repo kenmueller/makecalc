@@ -6,7 +6,7 @@ import styles from 'styles/Home.module.scss'
 const Home: NextPage = () => (
 	<div className={styles.root}>
 		<Head>
-			<title>Next.js</title>
+			<title key="title">makecalc</title>
 		</Head>
 		<h1>If you see this, your Next.js app is working!</h1>
 	</div>
