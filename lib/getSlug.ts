@@ -5,12 +5,17 @@ import slugify from './slugify'
 
 import 'firebase/firestore'
 
+const RESERVED_NAMES = ['new']
+
 const firestore = firebase.firestore()
 
 const getSlug = async (name: string) => {
 	const slug = slugify(name)
 	
-	return (await firestore.doc(`calculators/${slug}`).get()).exists
+	return (
+		RESERVED_NAMES.includes(slug) ||
+		(await firestore.doc(`calculators/${slug}`).get()).exists
+	)
 		? `${slug}-${nanoid(5)}`
 		: slug
 }

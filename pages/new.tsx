@@ -1,24 +1,43 @@
 import { useState, useCallback, useEffect, FormEvent } from 'react'
 import { NextPage } from 'next'
+import Router from 'next/router'
 import Head from 'next/head'
 import { toast } from 'react-toastify'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSave } from '@fortawesome/free-solid-svg-icons'
 
+import getUid from 'lib/getUid'
 import getSlug from 'lib/getSlug'
+import useCurrentUser from 'hooks/useCurrentUser'
 import Input from 'components/Input'
 
 import styles from 'styles/New.module.scss'
+import createCalculator from 'lib/createCalculator'
 
 const New: NextPage = () => {
-	const [name, setName] = useState('')
+	const currentUser = useCurrentUser()
 	
+	const [name, setName] = useState('')
 	const [slug, setSlug] = useState<string | null>(null)
 	const [isSlugLoading, setIsSlugLoading] = useState(false)
+	const [isLoading, setIsLoading] = useState(false)
 	
-	const save = useCallback((event: FormEvent<HTMLFormElement>) => {
+	const save = useCallback(async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
-	}, [])
+		
+		if (currentUser === undefined || !slug || !name || isSlugLoading)
+			return
+		
+		setIsLoading(true)
+		
+		const uid = await getUid(currentUser)
+		
+		if (!uid)
+			return setIsLoading(false)
+		
+		await createCalculator(slug, name, uid)
+		Router.push(`/${slug}/edit`)
+	}, [currentUser, slug, name, isSlugLoading])
 	
 	useEffect(() => {
 		if (!name)
@@ -62,7 +81,7 @@ const New: NextPage = () => {
 				)}
 				<button
 					className={styles.saveButton}
-					disabled={!name || isSlugLoading}
+					disabled={currentUser === undefined || !slug || !name || isSlugLoading}
 				>
 					<FontAwesomeIcon className={styles.saveButtonIcon} icon={faSave} />
 					save
