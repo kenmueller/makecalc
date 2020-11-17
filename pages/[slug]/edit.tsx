@@ -3,9 +3,8 @@ import { NextPage } from 'next'
 import Router from 'next/router'
 import Error from 'next/error'
 import Head from 'next/head'
+import Link from 'next/link'
 import { toast } from 'react-toastify'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 import { CalculatorPageProps, getInitialProps } from 'lib/CalculatorPage'
 import authenticate from 'lib/authenticate'
@@ -72,7 +71,9 @@ const EditCalculatorPage: NextPage<CalculatorPageProps> = ({ calculator }) => {
 				<title key="title">edit {calculator.name} - makecalc</title>
 			</Head>
 			<label className={styles.title}>edit calculator</label>
-			<h1 className={styles.name}>{calculator.name}</h1>
+			<Link href={`/${calculator.slug}`}>
+				<a className={styles.name}>{calculator.name}</a>
+			</Link>
 			<form onSubmit={save}>
 				<Input
 					className={styles.nameInput}
