@@ -7,6 +7,7 @@ import cx from 'classnames'
 
 import CalculatorInput from 'models/Calculator/Input'
 import getNextVariable, { VARIABLES } from 'lib/getNextVariable'
+import Row from './EditInputsRow'
 
 import styles from 'styles/EditInputs.module.scss'
 
@@ -52,33 +53,7 @@ const EditInputs = ({ className, inputs, setInputs }: EditInputsProps) => {
 			</thead>
 			<tbody>
 				{inputs.map(input => (
-					<tr key={input.id}>
-						<td className={styles.inputCell}>
-							<input
-								className={styles.input}
-								required
-								placeholder="pints"
-								value={input.label}
-							/>
-						</td>
-						<td className={styles.inputCell}>
-							<input
-								className={styles.input}
-								required
-								placeholder="x"
-								value={input.variable}
-							/>
-						</td>
-						<td>
-							<button
-								className={cx(styles.action, styles.remove)}
-								type="button"
-								onClick={() => {}}
-							>
-								<FontAwesomeIcon icon={faTrash} />
-							</button>
-						</td>
-					</tr>
+					<Row key={input.id} input={input} setInputs={setInputs} />
 				))}
 			</tbody>
 		</table>
