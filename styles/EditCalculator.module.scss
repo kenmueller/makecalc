@@ -16,6 +16,36 @@
 	margin-top: 20px;
 }
 
-.saveButton {
+.fieldsLabel {
 	margin-top: 20px;
+	padding-bottom: 6px;
+	font-weight: 900;
+	color: white;
+	border-bottom: 1px solid #333;
+}
+
+.footer {
+	display: flex;
+	margin-top: 20px;
+}
+
+.addFieldButton {
+	margin-right: 12px;
+	padding: 12px 20px;
+	font-size: 16px;
+	font-weight: 900;
+	color: white;
+	background: #1486e7;
+	border-radius: 8px;
+	transition: color 0.3s, background 0.3s, transform 0.3s;
+	
+	&:hover {
+		color: #1486e7;
+		background: white;
+		transform: translateY(-2px);
+	}
+}
+
+.addFieldButtonIcon {
+	margin-right: 8px;
 }

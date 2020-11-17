@@ -3,6 +3,7 @@ import { NextPage } from 'next'
 import Router from 'next/router'
 import Error from 'next/error'
 import Head from 'next/head'
+import { toast } from 'react-toastify'
 
 import { CalculatorPageProps, getInitialProps } from 'lib/CalculatorPage'
 import authenticate from 'lib/authenticate'
@@ -12,9 +13,10 @@ import Input from 'components/Input'
 import SaveButton from 'components/SaveButton'
 
 import styles from 'styles/EditCalculator.module.scss'
-import { toast } from 'react-toastify'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
-const EditCalculatorPage: NextPage<CalculatorPageProps> = ({ calculator }) => {
+const EditCalculatorPage: NextPage<CalculatorPageProps> = ({ calculator, fields }) => {
 	if (!calculator)
 		return <Error statusCode={404} />
 	
@@ -72,11 +74,24 @@ const EditCalculatorPage: NextPage<CalculatorPageProps> = ({ calculator }) => {
 					value={name}
 					setValue={setName}
 				/>
-				<SaveButton
-					className={styles.saveButton}
-					loading={isLoading}
-					disabled={!name || name === calculator.name}
-				/>
+				<h2 className={styles.fieldsLabel}>fields</h2>
+				{fields.map(field => (
+					<div key={field.id}>
+						<input />
+						<input />
+						<input />
+					</div>
+				))}
+				<footer className={styles.footer}>
+					<button className={styles.addFieldButton} type="button">
+						<FontAwesomeIcon className={styles.addFieldButtonIcon} icon={faPlus} />
+						add field
+					</button>
+					<SaveButton
+						loading={isLoading}
+						disabled={!name || name === calculator.name}
+					/>
+				</footer>
 			</form>
 		</>
 	)
