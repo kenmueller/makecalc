@@ -1,10 +1,10 @@
 import { NextPage } from 'next'
-import Error from 'next/error'
 import Head from 'next/head'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 
+import NotFound from 'pages/404'
 import { CalculatorPageProps, getInitialProps } from 'lib/CalculatorPage'
 import useCurrentUser from 'hooks/useCurrentUser'
 
@@ -12,7 +12,7 @@ import styles from 'styles/Calculator.module.scss'
 
 const CalculatorPage: NextPage<CalculatorPageProps> = ({ calculator }) => {
 	if (!calculator)
-		return <Error statusCode={404} />
+		return <NotFound />
 	
 	const currentUser = useCurrentUser()
 	

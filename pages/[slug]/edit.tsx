@@ -1,11 +1,11 @@
 import { useState, useCallback, useEffect, FormEvent } from 'react'
 import { NextPage } from 'next'
 import Router from 'next/router'
-import Error from 'next/error'
 import Head from 'next/head'
 import Link from 'next/link'
 import { toast } from 'react-toastify'
 
+import NotFound from 'pages/404'
 import { CalculatorPageProps, getInitialProps } from 'lib/CalculatorPage'
 import authenticate from 'lib/authenticate'
 import editCalculator from 'lib/editCalculator'
@@ -19,7 +19,7 @@ import styles from 'styles/EditCalculator.module.scss'
 
 const EditCalculatorPage: NextPage<CalculatorPageProps> = ({ calculator }) => {
 	if (!calculator)
-		return <Error statusCode={404} />
+		return <NotFound />
 	
 	const currentUser = useCurrentUser()
 	
