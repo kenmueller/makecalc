@@ -1,17 +1,23 @@
-import CalculatorField from 'models/CalculatorField'
+import CalculatorFields from 'models/Calculator/Fields'
 import firebase from './firebase'
+import snapshotWithId from './snapshotWithId'
 
 import 'firebase/firestore'
 
 const firestore = firebase.firestore()
 
 const getCalculatorFields = async (slug: string) => {
-	const { docs } = await firestore.collection(`calculators/${slug}/fields`).get()
+	const doc = firestore.doc(`calculators/${slug}`)
 	
-	return docs.map(snapshot => ({
-		id: snapshot.id,
-		...snapshot.data()
-	} as CalculatorField))
+	const [{ docs: inputs }, { docs: outputs }] = await Promise.all([
+		doc.collection('inputs').get(),
+		doc.collection('outputs').get()
+	])
+	
+	return {
+		inputs: inputs.map(snapshotWithId),
+		outputs: outputs.map(snapshotWithId)
+	} as CalculatorFields
 }
 
 export default getCalculatorFields

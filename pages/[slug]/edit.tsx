@@ -5,7 +5,7 @@ import Error from 'next/error'
 import Head from 'next/head'
 import { toast } from 'react-toastify'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 import { CalculatorPageProps, getInitialProps } from 'lib/CalculatorPage'
 import authenticate from 'lib/authenticate'
@@ -15,6 +15,7 @@ import Input from 'components/Input'
 import SaveButton from 'components/SaveButton'
 
 import styles from 'styles/EditCalculator.module.scss'
+import EditInputs from 'components/EditInputs'
 
 const EditCalculatorPage: NextPage<CalculatorPageProps> = ({ calculator, fields }) => {
 	if (!calculator)
@@ -23,6 +24,7 @@ const EditCalculatorPage: NextPage<CalculatorPageProps> = ({ calculator, fields 
 	const currentUser = useCurrentUser()
 	
 	const [name, setName] = useState(calculator.name)
+	const [inputs, setInputs] = useState(fields.inputs)
 	const [isLoading, setIsLoading] = useState(false)
 	
 	const save = useCallback(async (event: FormEvent<HTMLFormElement>) => {
@@ -74,18 +76,17 @@ const EditCalculatorPage: NextPage<CalculatorPageProps> = ({ calculator, fields 
 					value={name}
 					setValue={setName}
 				/>
-				<h2 className={styles.fieldsLabel}>fields</h2>
-				{fields.map(field => (
-					<div key={field.id}>
-						<input />
-						<input />
-						<input />
-					</div>
-				))}
+				<h2 className={styles.fieldsLabel}>inputs</h2>
+				<EditInputs
+					className={styles.editInputs}
+					inputs={inputs}
+					setInputs={setInputs}
+				/>
+				<h2 className={styles.fieldsLabel}>outputs</h2>
 				<footer className={styles.footer}>
-					<button className={styles.addFieldButton} type="button">
-						<FontAwesomeIcon className={styles.addFieldButtonIcon} icon={faPlus} />
-						add field
+					<button className={styles.addOutputButton} type="button">
+						<FontAwesomeIcon className={styles.addOutputButtonIcon} icon={faPlus} />
+						add output
 					</button>
 					<SaveButton
 						loading={isLoading}
