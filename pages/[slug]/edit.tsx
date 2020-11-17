@@ -4,6 +4,8 @@ import Router from 'next/router'
 import Error from 'next/error'
 import Head from 'next/head'
 import { toast } from 'react-toastify'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 import { CalculatorPageProps, getInitialProps } from 'lib/CalculatorPage'
 import authenticate from 'lib/authenticate'
@@ -13,8 +15,6 @@ import Input from 'components/Input'
 import SaveButton from 'components/SaveButton'
 
 import styles from 'styles/EditCalculator.module.scss'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 const EditCalculatorPage: NextPage<CalculatorPageProps> = ({ calculator, fields }) => {
 	if (!calculator)
