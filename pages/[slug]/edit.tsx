@@ -41,13 +41,13 @@ const EditCalculatorPage: NextPage<CalculatorPageProps> = ({ calculator }) => {
 		setIsLoading(true)
 		
 		try {
-			await editCalculator(calculator.slug, { name, inputs, outputs: [] })
+			await editCalculator(calculator.slug, { name, inputs, outputs })
 			Router.push(`/${calculator.slug}`)
 		} catch ({ message }) {
 			toast.error(message)
 			setIsLoading(false)
 		}
-	}, [calculator, currentUser, name, inputs, setIsLoading])
+	}, [calculator, currentUser, name, inputs, outputs, setIsLoading])
 	
 	useEffect(() => {
 		if (!calculator || currentUser === undefined)
