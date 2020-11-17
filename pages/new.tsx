@@ -7,8 +7,10 @@ import { toast } from 'react-toastify'
 import getUid from 'lib/getUid'
 import getSlug from 'lib/getSlug'
 import createCalculator from 'lib/createCalculator'
+import { getInitialInputs, getInitialOutputs } from 'lib/getInitialFields'
 import useCurrentUser from 'hooks/useCurrentUser'
 import Input from 'components/Input'
+import EditFields from 'components/EditFields'
 import SaveButton from 'components/SaveButton'
 
 import styles from 'styles/New.module.scss'
@@ -18,6 +20,8 @@ const New: NextPage = () => {
 	
 	const [name, setName] = useState('')
 	const [slug, setSlug] = useState<string | null>(null)
+	const [inputs, setInputs] = useState(getInitialInputs)
+	const [outputs, setOutputs] = useState(getInitialOutputs)
 	const [isSlugLoading, setIsSlugLoading] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
 	
@@ -34,9 +38,9 @@ const New: NextPage = () => {
 		if (!uid)
 			return setIsLoading(false)
 		
-		await createCalculator(slug, { name, uid, inputs: [], outputs: [] })
+		await createCalculator(slug, { name, uid, inputs, outputs })
 		Router.push(`/${slug}/edit`)
-	}, [currentUser, slug, name, isSlugLoading])
+	}, [currentUser, slug, name, inputs, outputs, isSlugLoading])
 	
 	useEffect(() => {
 		if (!name)
@@ -78,6 +82,10 @@ const New: NextPage = () => {
 						</p>
 					</>
 				)}
+				<h2 className={styles.fieldsLabel}>inputs</h2>
+				<EditFields type="inputs" fields={inputs} setFields={setInputs} />
+				<h2 className={styles.fieldsLabel}>outputs</h2>
+				<EditFields type="outputs" fields={outputs} setFields={setOutputs} />
 				<SaveButton
 					className={styles.saveButton}
 					loading={isLoading}
