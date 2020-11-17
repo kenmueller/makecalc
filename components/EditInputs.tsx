@@ -2,10 +2,10 @@ import { SetStateAction, useCallback } from 'react'
 import { nanoid } from 'nanoid'
 import { toast } from 'react-toastify'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import cx from 'classnames'
 
-import CalculatorInput from 'models/Calculator/Input'
+import CalculatorField from 'models/Calculator/Field'
 import getNextVariable, { VARIABLES } from 'lib/getNextVariable'
 import Row from './EditInputsRow'
 
@@ -13,8 +13,8 @@ import styles from 'styles/EditInputs.module.scss'
 
 export interface EditInputsProps {
 	className?: string
-	inputs: CalculatorInput[]
-	setInputs(inputs: SetStateAction<CalculatorInput[]>): void
+	inputs: CalculatorField[]
+	setInputs(inputs: SetStateAction<CalculatorField[]>): void
 }
 
 const EditInputs = ({ className, inputs, setInputs }: EditInputsProps) => {
@@ -29,7 +29,7 @@ const EditInputs = ({ className, inputs, setInputs }: EditInputsProps) => {
 		setInputs(inputs => [...inputs, {
 			id: nanoid(),
 			label: '',
-			variable
+			relation: variable
 		}])
 	}, [inputs, setInputs])
 	

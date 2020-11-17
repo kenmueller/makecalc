@@ -5,7 +5,7 @@ import Error from 'next/error'
 import Head from 'next/head'
 import { toast } from 'react-toastify'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 import { CalculatorPageProps, getInitialProps } from 'lib/CalculatorPage'
 import authenticate from 'lib/authenticate'
@@ -17,26 +17,26 @@ import SaveButton from 'components/SaveButton'
 import styles from 'styles/EditCalculator.module.scss'
 import EditInputs from 'components/EditInputs'
 
-const EditCalculatorPage: NextPage<CalculatorPageProps> = ({ calculator, fields }) => {
+const EditCalculatorPage: NextPage<CalculatorPageProps> = ({ calculator }) => {
 	if (!calculator)
 		return <Error statusCode={404} />
 	
 	const currentUser = useCurrentUser()
 	
 	const [name, setName] = useState(calculator.name)
-	const [inputs, setInputs] = useState(fields.inputs)
+	const [inputs, setInputs] = useState(calculator.inputs)
 	const [isLoading, setIsLoading] = useState(false)
 	
 	const save = useCallback(async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
 		
-		if (!(calculator && currentUser && currentUser.uid === calculator.owner && name !== calculator.name))
+		if (!(calculator && currentUser && currentUser.uid === calculator.owner))
 			return
 		
 		setIsLoading(true)
 		
 		try {
-			await editCalculator(calculator.slug, { name })
+			await editCalculator(calculator.slug, { name, inputs, outputs: [] })
 			Router.push(`/${calculator.slug}`)
 		} catch ({ message }) {
 			toast.error(message)
@@ -88,10 +88,7 @@ const EditCalculatorPage: NextPage<CalculatorPageProps> = ({ calculator, fields 
 						<FontAwesomeIcon className={styles.addOutputButtonIcon} icon={faPlus} />
 						add output
 					</button>
-					<SaveButton
-						loading={isLoading}
-						disabled={!name || name === calculator.name}
-					/>
+					<SaveButton loading={isLoading} disabled={!name} />
 				</footer>
 			</form>
 		</>

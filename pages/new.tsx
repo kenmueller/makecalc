@@ -36,7 +36,7 @@ const New: NextPage = () => {
 		if (!uid)
 			return setIsLoading(false)
 		
-		await createCalculator(slug, { name, uid })
+		await createCalculator(slug, { name, uid, inputs: [], outputs: [] })
 		Router.push(`/${slug}/edit`)
 	}, [currentUser, slug, name, isSlugLoading])
 	

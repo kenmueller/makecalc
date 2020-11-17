@@ -2,14 +2,14 @@ import { ChangeEvent, SetStateAction, useCallback } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
-import CalculatorInput from 'models/Calculator/Input'
+import CalculatorField from 'models/Calculator/Field'
 import { VARIABLES } from 'lib/getNextVariable'
 
 import styles from 'styles/EditInputsRow.module.scss'
 
 export interface EditInputsRowProps {
-	input: CalculatorInput
-	setInputs(inputs: SetStateAction<CalculatorInput[]>): void
+	input: CalculatorField
+	setInputs(inputs: SetStateAction<CalculatorField[]>): void
 }
 
 const EditInputsRow = ({ input, setInputs }: EditInputsRowProps) => {
@@ -58,7 +58,7 @@ const EditInputsRow = ({ input, setInputs }: EditInputsRowProps) => {
 					className={styles.input}
 					required
 					placeholder="x"
-					value={input.variable}
+					value={input.relation}
 					onChange={onVariableChange}
 				/>
 			</td>
