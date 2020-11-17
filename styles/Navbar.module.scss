@@ -5,7 +5,10 @@
 	top: 0;
 	left: 0;
 	right: 0;
+	background: transparentize(black, 0.4);
+	backdrop-filter: blur(4px);
 	border-bottom: $navbar-bottom-border-width solid #333;
+	z-index: 1;
 }
 
 .content {
