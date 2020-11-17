@@ -25,7 +25,7 @@ const New: NextPage = () => {
 	const save = useCallback(async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
 		
-		if (currentUser === undefined || !slug || !name || isSlugLoading)
+		if (currentUser === undefined || !slug || !name || isSlugLoading || isLoading)
 			return
 		
 		setIsLoading(true)
@@ -81,10 +81,17 @@ const New: NextPage = () => {
 				)}
 				<button
 					className={styles.saveButton}
-					disabled={currentUser === undefined || !slug || !name || isSlugLoading}
+					disabled={currentUser === undefined || !slug || !name || isSlugLoading || isLoading}
 				>
-					<FontAwesomeIcon className={styles.saveButtonIcon} icon={faSave} />
-					save
+					{isLoading
+						? 'loading...'
+						: (
+							<>
+								<FontAwesomeIcon className={styles.saveButtonIcon} icon={faSave} />
+								save
+							</>
+						)
+					}
 				</button>
 			</form>
 		</>
