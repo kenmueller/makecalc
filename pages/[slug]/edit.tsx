@@ -10,13 +10,13 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { CalculatorPageProps, getInitialProps } from 'lib/CalculatorPage'
 import authenticate from 'lib/authenticate'
 import editCalculator from 'lib/editCalculator'
-import getInitialInputs from 'lib/getInitialInputs'
+import { getInitialInputs, getInitialOutputs } from 'lib/getInitialFields'
 import useCurrentUser from 'hooks/useCurrentUser'
 import Input from 'components/Input'
+import EditFields from 'components/EditFields'
 import SaveButton from 'components/SaveButton'
 
 import styles from 'styles/EditCalculator.module.scss'
-import EditInputs from 'components/EditInputs'
 
 const EditCalculatorPage: NextPage<CalculatorPageProps> = ({ calculator }) => {
 	if (!calculator)
@@ -27,6 +27,9 @@ const EditCalculatorPage: NextPage<CalculatorPageProps> = ({ calculator }) => {
 	const [name, setName] = useState(calculator.name)
 	const [inputs, setInputs] = useState(
 		calculator.inputs.length ? calculator.inputs : getInitialInputs
+	)
+	const [outputs, setOutputs] = useState(
+		calculator.outputs.length ? calculator.outputs : getInitialOutputs
 	)
 	const [isLoading, setIsLoading] = useState(false)
 	
@@ -80,19 +83,10 @@ const EditCalculatorPage: NextPage<CalculatorPageProps> = ({ calculator }) => {
 					setValue={setName}
 				/>
 				<h2 className={styles.fieldsLabel}>inputs</h2>
-				<EditInputs
-					className={styles.editInputs}
-					inputs={inputs}
-					setInputs={setInputs}
-				/>
+				<EditFields type="inputs" fields={inputs} setFields={setInputs} />
 				<h2 className={styles.fieldsLabel}>outputs</h2>
-				<footer className={styles.footer}>
-					<button className={styles.addOutputButton} type="button">
-						<FontAwesomeIcon className={styles.addOutputButtonIcon} icon={faPlus} />
-						add output
-					</button>
-					<SaveButton loading={isLoading} disabled={!name} />
-				</footer>
+				<EditFields type="outputs" fields={outputs} setFields={setOutputs} />
+				<SaveButton className={styles.saveButton} loading={isLoading} disabled={!name} />
 			</form>
 		</>
 	)
