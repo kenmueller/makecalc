@@ -4,7 +4,12 @@ import 'firebase/firestore'
 
 const firestore = firebase.firestore()
 
-const createCalculator = (slug: string, name: string, uid: string) =>
+export interface CreateCalculatorData {
+	name: string
+	uid: string
+}
+
+const createCalculator = (slug: string, { name, uid }: CreateCalculatorData) =>
 	firestore.doc(`calculators/${slug}`).set({ name, owner: uid })
 
 export default createCalculator

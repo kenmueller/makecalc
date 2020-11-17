@@ -8,11 +8,12 @@ import { faSave } from '@fortawesome/free-solid-svg-icons'
 
 import getUid from 'lib/getUid'
 import getSlug from 'lib/getSlug'
+import createCalculator from 'lib/createCalculator'
 import useCurrentUser from 'hooks/useCurrentUser'
 import Input from 'components/Input'
+import SaveButton from 'components/SaveButton'
 
 import styles from 'styles/New.module.scss'
-import createCalculator from 'lib/createCalculator'
 
 const New: NextPage = () => {
 	const currentUser = useCurrentUser()
@@ -35,7 +36,7 @@ const New: NextPage = () => {
 		if (!uid)
 			return setIsLoading(false)
 		
-		await createCalculator(slug, name, uid)
+		await createCalculator(slug, { name, uid })
 		Router.push(`/${slug}/edit`)
 	}, [currentUser, slug, name, isSlugLoading])
 	
@@ -79,20 +80,11 @@ const New: NextPage = () => {
 						</p>
 					</>
 				)}
-				<button
+				<SaveButton
 					className={styles.saveButton}
+					loading={isLoading}
 					disabled={currentUser === undefined || !slug || !name || isSlugLoading || isLoading}
-				>
-					{isLoading
-						? 'loading...'
-						: (
-							<>
-								<FontAwesomeIcon className={styles.saveButtonIcon} icon={faSave} />
-								save
-							</>
-						)
-					}
-				</button>
+				/>
 			</form>
 		</>
 	)
