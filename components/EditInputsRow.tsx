@@ -9,10 +9,11 @@ import styles from 'styles/EditInputsRow.module.scss'
 
 export interface EditInputsRowProps {
 	input: CalculatorField
+	inputs: CalculatorField[]
 	setInputs(inputs: SetStateAction<CalculatorField[]>): void
 }
 
-const EditInputsRow = ({ input, setInputs }: EditInputsRowProps) => {
+const EditInputsRow = ({ input, inputs, setInputs }: EditInputsRowProps) => {
 	const onLabelChange = useCallback(({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
 		setInputs(inputs =>
 			inputs.map(_input =>
@@ -30,7 +31,7 @@ const EditInputsRow = ({ input, setInputs }: EditInputsRowProps) => {
 		setInputs(inputs =>
 			inputs.map(_input =>
 				_input.id === input.id
-					? { ..._input, variable: value }
+					? { ..._input, relation: value }
 					: _input
 			)
 		)
@@ -47,7 +48,6 @@ const EditInputsRow = ({ input, setInputs }: EditInputsRowProps) => {
 			<td className={styles.inputCell}>
 				<input
 					className={styles.input}
-					required
 					placeholder="pints"
 					value={input.label}
 					onChange={onLabelChange}
@@ -56,7 +56,6 @@ const EditInputsRow = ({ input, setInputs }: EditInputsRowProps) => {
 			<td className={styles.inputCell}>
 				<input
 					className={styles.input}
-					required
 					placeholder="x"
 					value={input.relation}
 					onChange={onVariableChange}
@@ -66,6 +65,7 @@ const EditInputsRow = ({ input, setInputs }: EditInputsRowProps) => {
 				<button
 					className={styles.remove}
 					type="button"
+					disabled={inputs.length === 1}
 					onClick={remove}
 				>
 					<FontAwesomeIcon icon={faTrash} />

@@ -53,7 +53,7 @@ const EditInputs = ({ className, inputs, setInputs }: EditInputsProps) => {
 			</thead>
 			<tbody>
 				{inputs.map(input => (
-					<Row key={input.id} input={input} setInputs={setInputs} />
+					<Row key={input.id} input={input} inputs={inputs} setInputs={setInputs} />
 				))}
 			</tbody>
 		</table>

@@ -3,8 +3,6 @@ import { NextPage } from 'next'
 import Router from 'next/router'
 import Head from 'next/head'
 import { toast } from 'react-toastify'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSave } from '@fortawesome/free-solid-svg-icons'
 
 import getUid from 'lib/getUid'
 import getSlug from 'lib/getSlug'

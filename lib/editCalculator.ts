@@ -1,5 +1,6 @@
 import CalculatorField from 'models/Calculator/Field'
 import firebase from './firebase'
+import filterFields from './filterFields'
 
 import 'firebase/firestore'
 
@@ -12,6 +13,10 @@ export interface EditCalculatorData {
 }
 
 const editCalculator = (slug: string, { name, inputs, outputs }: EditCalculatorData) =>
-	firestore.doc(`calculators/${slug}`).update({ name, inputs, outputs })
+	firestore.doc(`calculators/${slug}`).update({
+		name,
+		inputs: filterFields(inputs),
+		outputs: filterFields(outputs)
+	})
 
 export default editCalculator

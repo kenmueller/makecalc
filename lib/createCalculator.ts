@@ -1,5 +1,6 @@
 import CalculatorField from 'models/Calculator/Field'
 import firebase from './firebase'
+import filterFields from './filterFields'
 
 import 'firebase/firestore'
 
@@ -13,6 +14,11 @@ export interface CreateCalculatorData {
 }
 
 const createCalculator = (slug: string, { name, uid, inputs, outputs }: CreateCalculatorData) =>
-	firestore.doc(`calculators/${slug}`).set({ name, owner: uid, inputs, outputs })
+	firestore.doc(`calculators/${slug}`).set({
+		name,
+		owner: uid,
+		inputs: filterFields(inputs),
+		outputs: filterFields(outputs)
+	})
 
 export default createCalculator

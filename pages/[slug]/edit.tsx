@@ -10,6 +10,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { CalculatorPageProps, getInitialProps } from 'lib/CalculatorPage'
 import authenticate from 'lib/authenticate'
 import editCalculator from 'lib/editCalculator'
+import getInitialInputs from 'lib/getInitialInputs'
 import useCurrentUser from 'hooks/useCurrentUser'
 import Input from 'components/Input'
 import SaveButton from 'components/SaveButton'
@@ -24,7 +25,9 @@ const EditCalculatorPage: NextPage<CalculatorPageProps> = ({ calculator }) => {
 	const currentUser = useCurrentUser()
 	
 	const [name, setName] = useState(calculator.name)
-	const [inputs, setInputs] = useState(calculator.inputs)
+	const [inputs, setInputs] = useState(
+		calculator.inputs.length ? calculator.inputs : getInitialInputs
+	)
 	const [isLoading, setIsLoading] = useState(false)
 	
 	const save = useCallback(async (event: FormEvent<HTMLFormElement>) => {
@@ -42,7 +45,7 @@ const EditCalculatorPage: NextPage<CalculatorPageProps> = ({ calculator }) => {
 			toast.error(message)
 			setIsLoading(false)
 		}
-	}, [calculator, currentUser, name, setIsLoading])
+	}, [calculator, currentUser, name, inputs, setIsLoading])
 	
 	useEffect(() => {
 		if (!calculator || currentUser === undefined)
