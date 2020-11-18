@@ -1,16 +1,11 @@
-import Calculator from 'models/Calculator'
 import firebase from './firebase'
+import snapshotToCalculator from './snapshotToCalculator'
 
 import 'firebase/firestore'
 
 const firestore = firebase.firestore()
 
-const getCalculator = async (slug: string) => {
-	const snapshot = await firestore.doc(`calculators/${slug}`).get()
-	
-	return snapshot.exists
-		? { slug, ...snapshot.data() } as Calculator
-		: null
-}
+const getCalculator = async (slug: string) =>
+	snapshotToCalculator(await firestore.doc(`calculators/${slug}`).get())
 
 export default getCalculator
