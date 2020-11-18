@@ -1,19 +1,11 @@
-import User from 'models/User'
 import firebase from './firebase'
+import snapshotToUser from './snapshotToUser'
 
 import 'firebase/firestore'
 
 const firestore = firebase.firestore()
 
-const getUser = async (id: string) => {
-	const snapshot = await firestore.doc(`users/${id}`).get()
-	
-	return snapshot.exists
-		? {
-			slug: snapshot.get('slug'),
-			name: snapshot.get('name')
-		} as User
-		: null
-}
+const getUser = async (id: string) =>
+	snapshotToUser(await firestore.doc(`users/${id}`).get())
 
 export default getUser
