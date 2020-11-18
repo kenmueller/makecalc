@@ -10,6 +10,7 @@ import createCalculator from 'lib/createCalculator'
 import { getInitialInputs, getInitialOutputs } from 'lib/getInitialFields'
 import useCurrentUser from 'hooks/useCurrentUser'
 import Input from 'components/Input'
+import TextAreaWithLabel from 'components/TextAreaWithLabel'
 import EditFields from 'components/EditFields'
 import SaveButton from 'components/SaveButton'
 
@@ -18,8 +19,9 @@ import styles from 'styles/New.module.scss'
 const New: NextPage = () => {
 	const currentUser = useCurrentUser()
 	
-	const [name, setName] = useState('')
 	const [slug, setSlug] = useState<string | null>(null)
+	const [name, setName] = useState('')
+	const [description, setDescription] = useState('')
 	const [inputs, setInputs] = useState(getInitialInputs)
 	const [outputs, setOutputs] = useState(getInitialOutputs)
 	const [isSlugLoading, setIsSlugLoading] = useState(false)
@@ -38,9 +40,9 @@ const New: NextPage = () => {
 		if (!uid)
 			return setIsLoading(false)
 		
-		await createCalculator(slug, { name, uid, inputs, outputs })
-		Router.push(`/${slug}/edit`)
-	}, [currentUser, slug, name, inputs, outputs, isSlugLoading])
+		await createCalculator(slug, { name, description, uid, inputs, outputs })
+		Router.push(`/${slug}`)
+	}, [currentUser, slug, name, description, inputs, outputs, isSlugLoading])
 	
 	useEffect(() => {
 		if (!name)
@@ -71,6 +73,13 @@ const New: NextPage = () => {
 					placeholder="pints to ounces"
 					value={name}
 					setValue={setName}
+				/>
+				<TextAreaWithLabel
+					className={styles.descriptionInput}
+					label="description"
+					placeholder="tell us about your calculator"
+					value={description}
+					setValue={setDescription}
 				/>
 				{slug && (
 					<>

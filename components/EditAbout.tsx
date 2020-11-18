@@ -16,10 +16,6 @@ const EditAbout = ({ user }: EditAboutProps) => {
 	const [about, setAbout] = useState(user.about)
 	const [isLoading, setIsLoading] = useState(false)
 	
-	const onChange = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
-		setAbout(event.target.value)
-	}, [setAbout])
-	
 	const save = useCallback(async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
 		
@@ -44,7 +40,7 @@ const EditAbout = ({ user }: EditAboutProps) => {
 				className={styles.text}
 				placeholder="tell us more about you"
 				value={about}
-				onChange={onChange}
+				setValue={setAbout}
 			/>
 			<SaveButton loading={isLoading} disabled={about === user.about} />
 		</form>

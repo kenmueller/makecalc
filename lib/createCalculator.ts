@@ -8,14 +8,16 @@ const firestore = firebase.firestore()
 
 export interface CreateCalculatorData {
 	name: string
+	description: string
 	uid: string
 	inputs: CalculatorField[]
 	outputs: CalculatorField[]
 }
 
-const createCalculator = (slug: string, { name, uid, inputs, outputs }: CreateCalculatorData) =>
+const createCalculator = (slug: string, { name, description, uid, inputs, outputs }: CreateCalculatorData) =>
 	firestore.doc(`calculators/${slug}`).set({
 		name,
+		description,
 		owner: uid,
 		inputs: filterFields(inputs),
 		outputs: filterFields(outputs)

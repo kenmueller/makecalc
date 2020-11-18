@@ -8,13 +8,15 @@ const firestore = firebase.firestore()
 
 export interface EditCalculatorData {
 	name: string
+	description: string
 	inputs: CalculatorField[]
 	outputs: CalculatorField[]
 }
 
-const editCalculator = (slug: string, { name, inputs, outputs }: EditCalculatorData) =>
+const editCalculator = (slug: string, { name, description, inputs, outputs }: EditCalculatorData) =>
 	firestore.doc(`calculators/${slug}`).update({
 		name,
+		description,
 		inputs: filterFields(inputs),
 		outputs: filterFields(outputs)
 	})

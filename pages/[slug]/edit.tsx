@@ -13,6 +13,7 @@ import editCalculator from 'lib/editCalculator'
 import { getInitialInputs, getInitialOutputs } from 'lib/getInitialFields'
 import useCurrentUser from 'hooks/useCurrentUser'
 import Input from 'components/Input'
+import TextAreaWithLabel from 'components/TextAreaWithLabel'
 import EditFields from 'components/EditFields'
 import SaveButton from 'components/SaveButton'
 
@@ -29,6 +30,7 @@ const EditCalculatorPage: NextPage<EditCalculatorPageProps> = ({ calculator }) =
 	const currentUser = useCurrentUser()
 	
 	const [name, setName] = useState(calculator.name)
+	const [description, setDescription] = useState(calculator.description)
 	const [inputs, setInputs] = useState(
 		calculator.inputs.length ? calculator.inputs : getInitialInputs
 	)
@@ -46,13 +48,13 @@ const EditCalculatorPage: NextPage<EditCalculatorPageProps> = ({ calculator }) =
 		setIsLoading(true)
 		
 		try {
-			await editCalculator(calculator.slug, { name, inputs, outputs })
+			await editCalculator(calculator.slug, { name, description, inputs, outputs })
 			Router.push(`/${calculator.slug}`)
 		} catch ({ message }) {
 			toast.error(message)
 			setIsLoading(false)
 		}
-	}, [calculator, currentUser, name, inputs, outputs, setIsLoading])
+	}, [calculator, currentUser, name, description, inputs, outputs, setIsLoading])
 	
 	useEffect(() => {
 		if (!calculator || currentUser === undefined)
@@ -87,6 +89,13 @@ const EditCalculatorPage: NextPage<EditCalculatorPageProps> = ({ calculator }) =
 					placeholder={calculator.name}
 					value={name}
 					setValue={setName}
+				/>
+				<TextAreaWithLabel
+					className={styles.descriptionInput}
+					label="description"
+					placeholder="tell us about your calculator"
+					value={description}
+					setValue={setDescription}
 				/>
 				<h2 className={styles.fieldsLabel}>inputs</h2>
 				<EditFields type="inputs" fields={inputs} setFields={setInputs} />
