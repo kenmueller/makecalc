@@ -31,3 +31,18 @@
 .editIcon {
 	margin-right: 6px;
 }
+
+.owner {
+	margin-top: 12px;
+	font-weight: 900;
+	color: transparentize(white, 0.4);
+}
+
+.ownerName {
+	text-decoration: none;
+	color: white;
+	
+	&:not([aria-disabled]):hover {
+		text-decoration: underline;
+	}
+}

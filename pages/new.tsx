@@ -5,7 +5,7 @@ import Head from 'next/head'
 import { toast } from 'react-toastify'
 
 import getUid from 'lib/getUid'
-import getSlug from 'lib/getSlug'
+import getSlug from 'lib/getCalculatorSlug'
 import createCalculator from 'lib/createCalculator'
 import { getInitialInputs, getInitialOutputs } from 'lib/getInitialFields'
 import useCurrentUser from 'hooks/useCurrentUser'

@@ -6,7 +6,8 @@ import Link from 'next/link'
 import { toast } from 'react-toastify'
 
 import NotFound from 'pages/404'
-import { CalculatorPageProps, getInitialProps } from 'lib/CalculatorPage'
+import Calculator from 'models/Calculator'
+import getCalculator from 'lib/getCalculator'
 import authenticate from 'lib/authenticate'
 import editCalculator from 'lib/editCalculator'
 import { getInitialInputs, getInitialOutputs } from 'lib/getInitialFields'
@@ -17,7 +18,11 @@ import SaveButton from 'components/SaveButton'
 
 import styles from 'styles/EditCalculator.module.scss'
 
-const EditCalculatorPage: NextPage<CalculatorPageProps> = ({ calculator }) => {
+interface EditCalculatorPageProps {
+	calculator: Calculator | null
+}
+
+const EditCalculatorPage: NextPage<EditCalculatorPageProps> = ({ calculator }) => {
 	if (!calculator)
 		return <NotFound />
 	
@@ -93,6 +98,13 @@ const EditCalculatorPage: NextPage<CalculatorPageProps> = ({ calculator }) => {
 	)
 }
 
-EditCalculatorPage.getInitialProps = getInitialProps
+EditCalculatorPage.getInitialProps = async ({ query, res }) => {
+	const calculator = await getCalculator(query.slug as string)
+	
+	if (!calculator && res)
+		res.statusCode = 404
+	
+	return { calculator }
+}
 
 export default EditCalculatorPage

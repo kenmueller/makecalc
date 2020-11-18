@@ -1,4 +1,5 @@
 import firebase from './firebase'
+import getSlug from './getUserSlug'
 
 import 'firebase/auth'
 import 'firebase/firestore'
@@ -22,12 +23,16 @@ const authenticate = async () => {
 		if (!user.email)
 			throw new Error('Unable to get your email address')
 		
-		if (additionalUserInfo.isNewUser)
+		if (additionalUserInfo.isNewUser) {
+			const name = user.displayName ?? 'anonymous'
+			
 			await firestore.doc(`users/${user.uid}`).set({
-				name: user.displayName ?? 'anonymous',
+				slug: await getSlug(name),
+				name,
 				email: user.email,
 				joined: firebase.firestore.FieldValue.serverTimestamp()
 			})
+		}
 		
 		return user.uid
 	} catch (error) {

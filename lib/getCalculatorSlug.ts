@@ -9,7 +9,7 @@ const RESERVED_NAMES = ['new']
 
 const firestore = firebase.firestore()
 
-const getSlug = async (name: string) => {
+const getCalculatorSlug = async (name: string) => {
 	const slug = slugify(name)
 	
 	return (
@@ -20,4 +20,4 @@ const getSlug = async (name: string) => {
 		: slug
 }
 
-export default getSlug
+export default getCalculatorSlug
