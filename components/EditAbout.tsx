@@ -1,7 +1,7 @@
 import { useState, useCallback, ChangeEvent, FormEvent } from 'react'
-import TextArea from 'react-textarea-autosize'
 
 import User from 'models/User'
+import TextArea from './TextArea'
 import SaveButton from './SaveButton'
 
 import styles from 'styles/EditAbout.module.scss'
@@ -42,7 +42,6 @@ const EditAbout = ({ user }: EditAboutProps) => {
 		<form onSubmit={save}>
 			<TextArea
 				className={styles.text}
-				minRows={3}
 				placeholder="tell us more about you"
 				value={about}
 				onChange={onChange}
