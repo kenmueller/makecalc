@@ -30,6 +30,7 @@ const authenticate = async () => {
 				slug: await getSlug(name),
 				name,
 				email: user.email,
+				about: '',
 				joined: firebase.firestore.FieldValue.serverTimestamp()
 			})
 		}

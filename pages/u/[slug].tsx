@@ -8,6 +8,7 @@ import getUserWithSlug from 'lib/getUserWithSlug'
 import getCalculators from 'lib/getCalculators'
 import useCurrentUser from 'hooks/useCurrentUser'
 import SignOutButton from 'components/SignOutButton'
+import EditAbout from 'components/EditAbout'
 
 import styles from 'styles/User.module.scss'
 
@@ -31,6 +32,12 @@ const UserPage: NextPage<UserPageProps> = ({ user }) => {
 				<h1 className={styles.name}>{user.name}</h1>
 				{currentUser?.uid === user.id && <SignOutButton />}
 			</header>
+			<h2 className={styles.sectionLabel}>about</h2>
+			{currentUser?.uid === user.id
+				? <EditAbout user={user} />
+				: <p className={styles.about}>{user.about || '~~ a mystery ~~'}</p>
+			}
+			<h2 className={styles.sectionLabel}>calculators</h2>
 		</>
 	)
 }

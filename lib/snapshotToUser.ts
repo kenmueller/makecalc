@@ -6,7 +6,8 @@ const snapshotToUser = (snapshot: firebase.firestore.DocumentSnapshot): User | n
 		? {
 			id: snapshot.id,
 			slug: snapshot.get('slug'),
-			name: snapshot.get('name')
+			name: snapshot.get('name'),
+			about: snapshot.get('about')
 		}
 		: null
 
