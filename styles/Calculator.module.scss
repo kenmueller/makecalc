@@ -39,10 +39,11 @@
 }
 
 .ownerName {
-	text-decoration: none;
+	display: inline-block;
 	color: white;
+	transition: transform 0.3s;
 	
 	&:not([aria-disabled]):hover {
-		text-decoration: underline;
+		transform: translateX(2px);
 	}
 }
