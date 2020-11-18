@@ -1,5 +1,6 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
+import cx from 'classnames'
 
 import NotFound from 'pages/404'
 import User from 'models/User'
@@ -35,7 +36,13 @@ const UserPage: NextPage<UserPageProps> = ({ user }) => {
 			<h2 className={styles.sectionLabel}>about</h2>
 			{currentUser?.uid === user.id
 				? <EditAbout user={user} />
-				: <p className={styles.about}>{user.about || '~~ a mystery ~~'}</p>
+				: (
+					<p className={cx(styles.about, {
+						[styles.aboutEmpty]: !user.about
+					})}>
+						{user.about || '~~ a mystery ~~'}
+					</p>
+				)
 			}
 			<h2 className={styles.sectionLabel}>calculators</h2>
 		</>
