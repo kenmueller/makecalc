@@ -7,4 +7,6 @@ export default interface Calculator {
 	owner: string
 	inputs: Field[]
 	outputs: Field[]
+	users: number
+	views: number
 }

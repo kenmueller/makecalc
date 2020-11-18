@@ -1,0 +1,33 @@
+$text-horizontal-padding: 6px;
+
+.root {
+	display: block;
+	padding: 6px;
+	text-decoration: none;
+	color: white;
+	border: 1px solid #333;
+	border-radius: 8px;
+	
+	& + & {
+		margin-top: 12px;
+	}
+}
+
+.name {
+	margin: 0 $text-horizontal-padding;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 20px;
+	font-weight: 900;
+}
+
+.description {
+	margin: 4px $text-horizontal-padding 0;
+}
+
+.footer {
+	display: block;
+	background: transparentize(white, 0.9);
+	border-radius: 5px;
+}

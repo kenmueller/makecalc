@@ -20,7 +20,9 @@ const createCalculator = (slug: string, { name, description, uid, inputs, output
 		description,
 		owner: uid,
 		inputs: filterFields(inputs),
-		outputs: filterFields(outputs)
+		outputs: filterFields(outputs),
+		users: 0,
+		views: 0
 	})
 
 export default createCalculator

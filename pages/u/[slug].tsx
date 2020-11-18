@@ -10,6 +10,7 @@ import getCalculators from 'lib/getCalculators'
 import useCurrentUser from 'hooks/useCurrentUser'
 import SignOutButton from 'components/SignOutButton'
 import EditAbout from 'components/EditAbout'
+import CalculatorRow from 'components/CalculatorRow'
 
 import styles from 'styles/User.module.scss'
 
@@ -18,7 +19,7 @@ interface UserPageProps {
 	calculators: Calculator[]
 }
 
-const UserPage: NextPage<UserPageProps> = ({ user }) => {
+const UserPage: NextPage<UserPageProps> = ({ user, calculators }) => {
 	if (!user)
 		return <NotFound />
 	
@@ -45,6 +46,9 @@ const UserPage: NextPage<UserPageProps> = ({ user }) => {
 				)
 			}
 			<h2 className={styles.sectionLabel}>calculators</h2>
+			{calculators.map(calculator => (
+				<CalculatorRow key={calculator.slug} calculator={calculator} />
+			))}
 		</>
 	)
 }
